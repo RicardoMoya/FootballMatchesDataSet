@@ -1,15 +1,15 @@
+from bs4 import BeautifulSoup
+from FutbolClass import Partido
+import requests
+import re
+import Const
+
 # -*- coding: utf-8 -*-
 __author__ = 'Richard'
 
 # En este fichero voy a obtener un historico de partidos de futbol de todas
 # las temporadas anteriores a la actual a partir de la web:
 # http://www.bdfutbol.com/
-
-from bs4 import BeautifulSoup
-from FutbolClass import Partido
-import requests, re
-import Const
-
 
 # Guardo los partidos de futbol con un id
 partidos = dict()
@@ -20,107 +20,106 @@ equipos = dict()
 # Contador de Partidos
 contador = 0
 
+
 # Sustituyo los caracteres especiales de HTML
-def replaceHtml (string):
-    string = string.replace('&aacute;','a')
-    string = string.replace('&Aacute;','A')
-    string = string.replace('&agrave;','a')
-    string = string.replace('&Agrave;','A')
-    string = string.replace('&eacute;','e')
-    string = string.replace('&egrave;','e')
-    string = string.replace('&Eacute;','E')
-    string = string.replace('&Egrave;','E')
-    string = string.replace('&iacute;','i')
-    string = string.replace('&igrave;','i')
-    string = string.replace('&Iacute;','I')
-    string = string.replace('&Igrave;','I')
-    string = string.replace('&oacute;','o')
-    string = string.replace('&ograve;','o')
-    string = string.replace('&Oacute;','O')
-    string = string.replace('&Ograve;','O')
-    string = string.replace('&uacute;','u')
-    string = string.replace('&ugrave;','u')
-    string = string.replace('&Uacute;','U')
-    string = string.replace('&Ugrave;','U')
-    string = string.replace('&ntilde;','ñ')
+def replace_html(equipo):
+    equipo = equipo.replace('&aacute;', 'a')
+    equipo = equipo.replace('&Aacute;', 'A')
+    equipo = equipo.replace('&agrave;', 'a')
+    equipo = equipo.replace('&Agrave;', 'A')
+    equipo = equipo.replace('&eacute;', 'e')
+    equipo = equipo.replace('&egrave;', 'e')
+    equipo = equipo.replace('&Eacute;', 'E')
+    equipo = equipo.replace('&Egrave;', 'E')
+    equipo = equipo.replace('&iacute;', 'i')
+    equipo = equipo.replace('&igrave;', 'i')
+    equipo = equipo.replace('&Iacute;', 'I')
+    equipo = equipo.replace('&Igrave;', 'I')
+    equipo = equipo.replace('&oacute;', 'o')
+    equipo = equipo.replace('&ograve;', 'o')
+    equipo = equipo.replace('&Oacute;', 'O')
+    equipo = equipo.replace('&Ograve;', 'O')
+    equipo = equipo.replace('&uacute;', 'u')
+    equipo = equipo.replace('&ugrave;', 'u')
+    equipo = equipo.replace('&Uacute;', 'U')
+    equipo = equipo.replace('&Ugrave;', 'U')
+    equipo = equipo.replace('&ntilde;', 'ñ')
 
-    return string
+    return equipo
 
 
-# Función para sustituir el nombre de los equipos y unificarlos
-def replaceEquipos (str):
+# Funcion para sustituir el nombre de los equipos y unificarlos
+def replace_equipos(equipo):
+    equipo = equipo.replace('Deportivo de La Coruña', 'Deportivo')
+    equipo = equipo.replace('Barcelona Atletic', 'Barcelona B')
 
-    str = str.replace('Deportivo de La Coruña', 'Deportivo')
-    str = str.replace('Barcelona Atletic', 'Barcelona B')
-
-    return str
+    return equipo
 
 
 # Inserto los equipos nuevos en el diccionario
-def findEquipos(strResultados):
-
-    match = re.findall(r'SE\[\d{0,100}\]=\".*?\";', strResultados)
+def find_equipos(str_resultados):
+    match = re.findall(r'SE\[\d{0,100}\]=\".*?\";', str_resultados)
     for mat in match:
         mat = re.sub(r'SE.*?="', '', mat)
-        mat = mat.replace('";','')
+        mat = mat.replace('";', '')
         sp = mat.split('|')
 
         if not sp[0] in equipos:
-            equipos[sp[0]] = replaceHtml(sp[1])
-
+            equipos[sp[0]] = replace_html(sp[1])
 
 
 # Obtengo una lista con los partidos de futbol de una temporada
-def findPartidos(strPartidos, url):
-
+def find_partidos(str_partidos, url):
     global contador
 
-    match = re.findall(r'SP\[\d{0,100}\]\[\d{0,100}\]=\".*?\";', strPartidos)
+    match = re.findall(r'SP\[\d{0,100}\]\[\d{0,100}\]=\".*?\";', str_partidos)
     for mat in match:
         jornada = re.findall(r'SP\[.*?]', mat)
-        jornada = jornada[0].replace('SP[','').replace(']','')
-        mat = re.sub(r'SP.*?="', '', mat).replace('";','')
+        jornada = jornada[0].replace('SP[', '').replace(']', '')
+        mat = re.sub(r'SP.*?="', '', mat).replace('";', '')
         sp = mat.split(' ')
         contador += 1
-        partidos[contador] = Partido(contador, url, jornada, replaceEquipos(equipos[sp[1]]), replaceEquipos(equipos[sp[2]]), sp[3], sp[4], sp[0])
+        partidos[contador] = Partido(contador, url, jornada,
+                                     replace_equipos(equipos[sp[1]]),
+                                     replace_equipos(equipos[sp[2]]), sp[3],
+                                     sp[4], sp[0])
 
     return partidos
 
 
-# Devuelvo un diccionario con todos los partidos de futbol de todas las temporadas
-def getPartidos():
-
+# Devuelvo un diccionario con todos los partidos de
+# futbol de todas las temporadas
+def get_partidos():
     # Genero las URLS y scrapeo los datos
-    for url in Const.temporadas:
-
-        print "****  PROCESANDO TEMPORADA %s ****" %url
+    for url in Const.TEMPORADAS:
+        print "****  PROCESANDO TEMPORADA %s ****" % url
         # Construyo las URLs
-        urlPrimera = Const.urlPrimera % url
-        urlSegunda = Const.urlSegunda % url
+        url_primera = Const.URL_PRIMERA % url
+        url_segunda = Const.URL_SEGUNDA % url
 
         # Realizo las peticiones a las URLs
-        reqPrimera  = requests.get(urlPrimera)
-        reqSegunda  = requests.get(urlSegunda)
+        req_primera = requests.get(url_primera)
+        req_segunda = requests.get(url_segunda)
 
         # Paso la request a un objeto BeautifulSoup
-        soupPrimera = BeautifulSoup(reqPrimera.text)
-        soupSegunda = BeautifulSoup(reqSegunda.text)
+        soup_primera = BeautifulSoup(req_primera.text)
+        soup_segunda = BeautifulSoup(req_segunda.text)
 
         # Obtengo el div donde estan los datos
-        datosPrimera = str(soupPrimera.find('div',{'id':'resultats'}))
-        datosSegunda = str(soupSegunda.find('div',{'id':'resultats'}))
+        datos_primera = str(soup_primera.find('div', {'id': 'resultats'}))
+        datos_segunda = str(soup_segunda.find('div', {'id': 'resultats'}))
 
         # Obtengo equipos de futbol
-        findEquipos(datosPrimera)
-        findEquipos(datosSegunda)
+        find_equipos(datos_primera)
+        find_equipos(datos_segunda)
 
         # Obtengo los equipos de futbol
-        findPartidos(datosPrimera, url)
-        findPartidos(datosSegunda, url)
+        find_partidos(datos_primera, url)
+        find_partidos(datos_segunda, url)
 
     return partidos
 
 
 # Devuelvo el valor del contador
-def getContador ():
+def get_contador():
     return contador
