@@ -1,11 +1,11 @@
+# -*- coding: utf-8 -*-
+__author__ = 'RicardoMoya'
+
 from bs4 import BeautifulSoup
 from FutbolClass import Partido
 import requests
 import re
 import Const
-
-# -*- coding: utf-8 -*-
-__author__ = 'Richard'
 
 # En este fichero voy a obtener los resultados de futbol de la temporada 2014-15
 # WEB: http://www.resultados-futbol.com

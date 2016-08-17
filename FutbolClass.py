@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
+__author__ = 'RicardoMoya'
+
 import time
 import datetime
-
-# -*- coding: utf-8 -*-
-__author__ = 'Richard'
 
 
 class Equipo:

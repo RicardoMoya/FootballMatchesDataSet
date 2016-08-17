@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
+__author__ = 'RicardoMoya'
+
 import ScrapBDFutbol as bdFutbol
 import ScrapTemporada2015 as thisTemporada
-
-# -*- coding: utf-8 -*-
-__author__ = 'Richard'
 
 # Obtengo los partidos de futbol de las temporadas anteriores
 partidos = bdFutbol.get_partidos()

@@ -29,7 +29,7 @@ $ pip install requests
 
 El Scraping realizado en este proyecto se hace a través de dos fuentes:
 
-1.- http://www.bdfutbol.com/: De esta web se obtienen los resultados de todos los partidos de futbol de las temporadas pasadas (1970-71 hasta 2014-15). Esta web no ofrece los resultados de la presente temporada.
+1.- http://www.bdfutbol.com/: De esta web se obtienen los resultados de todos los partidos de futbol de las temporadas pasadas (1970-71 hasta 2015-16). Esta web no ofrece los resultados de la presente temporada.
 
 2.- http://www.resultados-futbol.com/: De esta web se obtienen los resultados de los partidos jugados de la presente temporada.
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = 'Richard'
+__author__ = 'RicardoMoya'
 
 # De la web: http://www.bdfutbol.com. Para el historico de partidos de futbol
 URL_PRIMERA = "http://www.bdfutbol.com/es/t/t%s.html"
