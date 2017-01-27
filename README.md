@@ -38,7 +38,7 @@ El Scraping realizado en este proyecto se hace a través de dos fuentes:
 Para obtener los resultados de los partidos de fútbol, debéis de ejecutar el script "Main.py". Tras su ejecución se creará un fichero llamado "DataSetPartidos.txt" en el que en cada linea se encontrará
 los datos de un partido de fútbol. Cada uno de los datos de un partido de fútbol esta separado por los delimitadores "::". El significado de cada uno de esos datos es el siguiente:
 
-"idPartido::temporada::jornada::EquipoLocal::EquipoVisitante::golesLocal::golesVisitante::fecha::timestamp"
+"idPartido::temporada::division::jornada::EquipoLocal::EquipoVisitante::golesLocal::golesVisitante::fecha::timestamp"
 
 Un ejemplo seria el siguiente:
 
