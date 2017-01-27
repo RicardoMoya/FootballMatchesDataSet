@@ -42,10 +42,11 @@ los datos de un partido de fútbol. Cada uno de los datos de un partido de fútb
 
 Un ejemplo seria el siguiente:
 
-4808::1977-78::8::Rayo Vallecano::Real Madrid::3::2::30/10/1977::247014000.0
+4808::1977-78::1::8::Rayo Vallecano::Real Madrid::3::2::30/10/1977::247014000.0
 
     - idPartido (4808): Un identificador único de partido.
     - temporada (1977-78): Temporada en la que se jugó el partido
+    - division (1): División en la que se jugo el partido (Primera '1', Segunda '2')
     - jornada (8): Jornada en la que se jugó el partido
     - EquipoLocal (Rayo Vallecano): Nombre del Equipo Local
     - EquipoVisitante (Real Madrid): Nombre del Equipo Visitante

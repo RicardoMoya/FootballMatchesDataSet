@@ -15,10 +15,11 @@ class Equipo:
 
 
 class Partido:
-    def __init__(self, id_partido, temporada, jornada, local, visitante,
-                 goles_local, goles_visitante, fecha):
+    def __init__(self, id_partido, temporada, division, jornada, local,
+                 visitante, goles_local, goles_visitante, fecha):
         self.idPartido = id_partido
         self.temporada = temporada
+        self.division = division
         self.jornada = jornada
         self.local = local
         self.visitante = visitante
@@ -29,7 +30,7 @@ class Partido:
             datetime.datetime.strptime(fecha, "%d/%m/%Y").timetuple())
 
     def __str__(self):
-        return "%s::%s::%s::%s::%s::%s::%s::%s::%s" \
-               % (self.idPartido, self.temporada, self.jornada, self.local,
-                  self.visitante, self.golesLocal, self.golesVisitante,
-                  self.fecha, self.timestamp)
+        return "%s::%s::%s::%s::%s::%s::%s::%s::%s::%s" \
+               % (self.idPartido, self.temporada, self.division, self.jornada,
+                  self.local, self.visitante, self.golesLocal,
+                  self.golesVisitante, self.fecha, self.timestamp)

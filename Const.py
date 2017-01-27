@@ -18,8 +18,8 @@ TEMPORADAS = [
 
 # De la web: http://www.resultados-futbol.com/.
 # Para los resultados de la temporada 2016-17
-TEMPORADA_2016 = "2015-2016"
-URL_PRIMERA_2016 = "http://www.resultados-futbol.com/primera/grupo1/jornada%s"
-URL_SEGUNDA_2016 = "http://www.resultados-futbol.com/segunda/grupo1/jornada%s"
+TEMPORADA_2017 = "2016-2017"
+URL_PRIMERA_2017 = "http://www.resultados-futbol.com/primera/grupo1/jornada%s"
+URL_SEGUNDA_2017 = "http://www.resultados-futbol.com/segunda/grupo1/jornada%s"
 MAX_JORNADAS_1 = 38
 MAX_JORNADAS_2 = 42

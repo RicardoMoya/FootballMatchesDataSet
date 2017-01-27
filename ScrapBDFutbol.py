@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from FutbolClass import Partido
 import requests
 import re
+import unicodedata
 import Const
 
 # En este fichero voy a obtener un historico de partidos de futbol de todas
@@ -21,37 +22,13 @@ equipos = dict()
 contador = 0
 
 
-# Sustituyo los caracteres especiales de HTML
-def replace_html(equipo):
-    equipo = equipo.replace('&aacute;', 'a')
-    equipo = equipo.replace('&Aacute;', 'A')
-    equipo = equipo.replace('&agrave;', 'a')
-    equipo = equipo.replace('&Agrave;', 'A')
-    equipo = equipo.replace('&eacute;', 'e')
-    equipo = equipo.replace('&egrave;', 'e')
-    equipo = equipo.replace('&Eacute;', 'E')
-    equipo = equipo.replace('&Egrave;', 'E')
-    equipo = equipo.replace('&iacute;', 'i')
-    equipo = equipo.replace('&igrave;', 'i')
-    equipo = equipo.replace('&Iacute;', 'I')
-    equipo = equipo.replace('&Igrave;', 'I')
-    equipo = equipo.replace('&oacute;', 'o')
-    equipo = equipo.replace('&ograve;', 'o')
-    equipo = equipo.replace('&Oacute;', 'O')
-    equipo = equipo.replace('&Ograve;', 'O')
-    equipo = equipo.replace('&uacute;', 'u')
-    equipo = equipo.replace('&ugrave;', 'u')
-    equipo = equipo.replace('&Uacute;', 'U')
-    equipo = equipo.replace('&Ugrave;', 'U')
-    equipo = equipo.replace('&ntilde;', 'ñ')
-
-    return equipo
-
-
 # Funcion para sustituir el nombre de los equipos y unificarlos
 def replace_equipos(equipo):
     equipo = equipo.replace('Deportivo de La Coruña', 'Deportivo')
     equipo = equipo.replace('Barcelona Atletic', 'Barcelona B')
+    # Elimino las tildes
+    equipo = unicodedata.normalize('NFKD', equipo.decode('utf-8')).encode(
+        'ASCII', 'ignore')
 
     return equipo
 
@@ -65,11 +42,11 @@ def find_equipos(str_resultados):
         sp = mat.split('|')
 
         if not sp[0] in equipos:
-            equipos[sp[0]] = replace_html(sp[1])
+            equipos[sp[0]] = sp[1]
 
 
 # Obtengo una lista con los partidos de futbol de una temporada
-def find_partidos(str_partidos, url):
+def find_partidos(str_partidos, temporada, division):
     global contador
 
     match = re.findall(r'SP\[\d{0,100}\]\[\d{0,100}\]=\".*?\";', str_partidos)
@@ -79,7 +56,7 @@ def find_partidos(str_partidos, url):
         mat = re.sub(r'SP.*?="', '', mat).replace('";', '')
         sp = mat.split(' ')
         contador += 1
-        partidos[contador] = Partido(contador, url, jornada,
+        partidos[contador] = Partido(contador, temporada, division, jornada,
                                      replace_equipos(equipos[sp[1]]),
                                      replace_equipos(equipos[sp[2]]), sp[3],
                                      sp[4], sp[0])
@@ -102,8 +79,8 @@ def get_partidos():
         req_segunda = requests.get(url_segunda)
 
         # Paso la request a un objeto BeautifulSoup
-        soup_primera = BeautifulSoup(req_primera.text)
-        soup_segunda = BeautifulSoup(req_segunda.text)
+        soup_primera = BeautifulSoup(req_primera.text, "html.parser")
+        soup_segunda = BeautifulSoup(req_segunda.text, "html.parser")
 
         # Obtengo el div donde estan los datos
         datos_primera = str(soup_primera.find('div', {'id': 'resultats'}))
@@ -113,9 +90,9 @@ def get_partidos():
         find_equipos(datos_primera)
         find_equipos(datos_segunda)
 
-        # Obtengo los equipos de futbol
-        find_partidos(datos_primera, url)
-        find_partidos(datos_segunda, url)
+        # Obtengo los partidos de futbol
+        find_partidos(datos_primera, url, 1)
+        find_partidos(datos_segunda, url, 2)
 
     return partidos
 
