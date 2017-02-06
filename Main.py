@@ -11,10 +11,10 @@ partidos = bd_futbol.get_partidos()
 partidos_2016_17 = this_temporada.get_partidos(bd_futbol.get_contador())
 
 fichero = open('DataSetPartidos.txt', 'w')
-for key, value in partidos.items():
+for value in partidos.values():
     fichero.write('%s\n' % str(value))
 
-for key, value in partidos_2016_17.items():
+for value in partidos_2016_17.values():
     fichero.write('%s\n' % str(value))
 
 fichero.close()

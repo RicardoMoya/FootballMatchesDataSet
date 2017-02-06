@@ -6,7 +6,6 @@ from FutbolClass import Partido
 import requests
 import re
 import Const
-import sys
 
 # En este fichero voy a obtener los resultados de futbol de la temporada 2014-15
 # WEB: http://www.resultados-futbol.com
@@ -60,7 +59,7 @@ def get_fecha_partido(fecha_sucia):
 
 # Obtengo el nombre del equipo de futbol
 def get_equipo(equipo_sucio):
-    club = equipo_sucio.find_all('a')[1].attrs['href'].replace('/','')
+    club = equipo_sucio.find_all('a')[1].attrs['href'].replace('/', '')
     return replace_equipos(club.strip())
 
 
