@@ -12,7 +12,7 @@ partidos_2017_18 = this_temporada.get_partidos(bd_futbol.get_contador())
 
 fichero = open('DataSetPartidos.txt', 'w')
 fichero.write('idPartido::temporada::division::jornada::EquipoLocal::'
-              'EquipoVisitante::golesLocal::golesVisitante::fecha::timestamp')
+              'EquipoVisitante::golesLocal::golesVisitante::fecha::timestamp\n')
 for value in partidos.values():
     fichero.write('%s\n' % str(value))
 
