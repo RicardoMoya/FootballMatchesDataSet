@@ -76,7 +76,7 @@ def get_resultado(resultado_sucio):
 
 # Obtengo los datos de un partido de futbol
 def get_partido(tr_partido):
-    soup_tr = BeautifulSoup(tr_partido)
+    soup_tr = BeautifulSoup(tr_partido, "html.parser")
 
     fecha = get_fecha_partido(str(soup_tr.find_all('td', {'class': 'fecha'})))
     local = get_equipo(
@@ -117,21 +117,21 @@ def get_partidos(contador):
     # Obtengo los partidos de primera division
     for i in range(1, Const.MAX_JORNADAS_1 + 1):
         # Construyo las URLs
-        url = Const.URL_PRIMERA_2017 % i
+        url = Const.URL_PRIMERA_2018 % i
         print "Procesando %s" % url
 
         # Realizo las peticiones a las URLs
         req_primera = requests.get(url)
 
         # Paso la request a un objeto BeautifulSoup
-        soup_primera = BeautifulSoup(req_primera.text)
+        soup_primera = BeautifulSoup(req_primera.text, "html.parser")
 
         # Obtengo la tabla con los resultado de los partidos de la jornada
         tabla_partidos = str(soup_primera.find('table', {'id': 'tabla1'}))
         partidos_jornada = find_partidos(tabla_partidos)
         for part in partidos_jornada:
             contador += 1
-            partidos[contador] = Partido(contador, Const.TEMPORADA_2017, 1, i,
+            partidos[contador] = Partido(contador, Const.TEMPORADA_2018, 1, i,
                                          part['local'], part['visitante'],
                                          part['gLocal'], part['gVisitante'],
                                          part['fecha'])
@@ -139,7 +139,7 @@ def get_partidos(contador):
     # Obtengo los partidos de segunda division
     for i in range(1, Const.MAX_JORNADAS_2 + 1):
         # Construyo las URLs
-        url = Const.URL_SEGUNDA_2017 % i
+        url = Const.URL_SEGUNDA_2018 % i
         print "Procesando %s" % url
 
         # Realizo las peticiones a las URLs
@@ -153,7 +153,7 @@ def get_partidos(contador):
         partidos_jornada = find_partidos(tabla_partidos)
         for part in partidos_jornada:
             contador += 1
-            partidos[contador] = Partido(contador, Const.TEMPORADA_2017, 2, i,
+            partidos[contador] = Partido(contador, Const.TEMPORADA_2018, 2, i,
                                          part['local'], part['visitante'],
                                          part['gLocal'], part['gVisitante'],
                                          part['fecha'])

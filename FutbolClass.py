@@ -26,8 +26,8 @@ class Partido:
         self.golesLocal = goles_local
         self.golesVisitante = goles_visitante
         self.fecha = fecha
-        self.timestamp = time.mktime(
-            datetime.datetime.strptime(fecha, "%d/%m/%Y").timetuple())
+        self.timestamp = int(time.mktime(
+            datetime.datetime.strptime(fecha, "%d/%m/%Y").timetuple()))
 
     def __str__(self):
         return "%s::%s::%s::%s::%s::%s::%s::%s::%s::%s" \

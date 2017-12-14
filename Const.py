@@ -13,13 +13,14 @@ TEMPORADAS = [
     "1997-98", "1998-99", "1999-00",
     "2000-01", "2001-02", "2002-03", "2003-04", "2004-05", "2005-06", "2006-07",
     "2007-08", "2008-09", "2009-10",
-    "2010-11", "2011-12", "2012-13", "2013-14", "2014-15", "2015-16"
+    "2010-11", "2011-12", "2012-13", "2013-14", "2014-15", "2015-16",
+    "2016-2017"
 ]
 
 # De la web: http://www.resultados-futbol.com/.
-# Para los resultados de la temporada 2016-17
-TEMPORADA_2017 = "2016-2017"
-URL_PRIMERA_2017 = "http://www.resultados-futbol.com/primera/grupo1/jornada%s"
-URL_SEGUNDA_2017 = "http://www.resultados-futbol.com/segunda/grupo1/jornada%s"
+# Para los resultados de la temporada 2017-18
+TEMPORADA_2018 = "2017-2018"
+URL_PRIMERA_2018 = "http://www.resultados-futbol.com/primera/grupo1/jornada%s"
+URL_SEGUNDA_2018 = "http://www.resultados-futbol.com/segunda/grupo1/jornada%s"
 MAX_JORNADAS_1 = 38
 MAX_JORNADAS_2 = 42
