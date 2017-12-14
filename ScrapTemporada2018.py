@@ -98,7 +98,7 @@ def get_partido(tr_partido):
 # Obtengo un listado con los partidos de Futbol
 def find_partidos(tabla_partidos):
     partidos_jornada = list()
-    soup_tabla = BeautifulSoup(tabla_partidos)
+    soup_tabla = BeautifulSoup(tabla_partidos, "html.parser")
     tr_partidos = soup_tabla.find_all('tr', {'class': 'vevent'})
 
     for tr in tr_partidos:
@@ -146,7 +146,7 @@ def get_partidos(contador):
         req_segunda = requests.get(url)
 
         # Paso la request a un objeto BeautifulSoup
-        soup_segunda = BeautifulSoup(req_segunda.text)
+        soup_segunda = BeautifulSoup(req_segunda.text, "html.parser")
 
         # Obtengo la tabla con los resultado de los partidos de la jornada
         tabla_partidos = str(soup_segunda.find('table', {'id': 'tabla1'}))
