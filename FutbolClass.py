@@ -31,6 +31,5 @@ class Partido:
 
     def __str__(self):
         return "%s::%s::%s::%s::%s::%s::%s::%s::%s::%s" \
-               % (self.idPartido, self.temporada, self.division, self.jornada,
-                  self.local, self.visitante, self.golesLocal,
-                  self.golesVisitante, self.fecha, self.timestamp)
+               % (self.idPartido, self.temporada, self.division, self.jornada, self.local, self.visitante,
+                  self.golesLocal, self.golesVisitante, self.fecha, self.timestamp)

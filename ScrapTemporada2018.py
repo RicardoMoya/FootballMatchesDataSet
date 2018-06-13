@@ -45,13 +45,11 @@ def replace_equipos(equipo):
 # Obtengo la fecha del partido de futbol
 def get_fecha_partido(fecha_sucia):
     charts_remove = ['[', '\\n', '\\t']
-    fecha = re.sub(r'[<](/)?td[^>]*[>]', '', fecha_sucia)\
-        .translate(None, ''.join(charts_remove))
+    fecha = re.sub(r'[<](/)?td[^>]*[>]', '', fecha_sucia).translate(None, ''.join(charts_remove))
     fecha = fecha.split('<br/>')[0].strip()
     fecha = fecha.split(' ')
-    meses = {'Ene': '01', 'Feb': '02', 'Mar': '03', 'Abr': '04', 'May': '05',
-             'Jun': '06', 'Jul': '07', 'Ago': '08', 'Sep': '09', 'Oct': '10',
-             'Nov': '11', 'Dic': '12', 'Oc': '10', 'Ee': '01'}
+    meses = {'Ene': '01', 'Feb': '02', 'Mar': '03', 'Abr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Ago': '08',
+             'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dic': '12', 'Oc': '10', 'Ee': '01', 'Ju': '06'}
     fecha = "%s/%s/20%s" % (fecha[0], meses[fecha[1]], fecha[2])
 
     return fecha
@@ -66,8 +64,7 @@ def get_equipo(equipo_sucio):
 # Obtengo el resultado
 def get_resultado(resultado_sucio):
     resultado = resultado_sucio.find('a').text
-    resultado = re.sub(r'[<](/)?a[^>]*[>]', '', resultado).replace('</a>',
-                                                                   '').strip()
+    resultado = re.sub(r'[<](/)?a[^>]*[>]', '', resultado).replace('</a>', '').strip()
     if 'x' in resultado:
         return None
     else:
@@ -79,12 +76,9 @@ def get_partido(tr_partido):
     soup_tr = BeautifulSoup(tr_partido, "html.parser")
 
     fecha = get_fecha_partido(str(soup_tr.find_all('td', {'class': 'fecha'})))
-    local = get_equipo(
-        BeautifulSoup(str(soup_tr.find_all('td', {'class': 'equipo1'}))))
-    visitante = get_equipo(
-        BeautifulSoup(str(soup_tr.find_all('td', {'class': 'equipo2'}))))
-    resultado = get_resultado(
-        BeautifulSoup(str(soup_tr.find_all('td', {'class': 'rstd'}))))
+    local = get_equipo(BeautifulSoup(str(soup_tr.find_all('td', {'class': 'equipo1'}))))
+    visitante = get_equipo(BeautifulSoup(str(soup_tr.find_all('td', {'class': 'equipo2'}))))
+    resultado = get_resultado(BeautifulSoup(str(soup_tr.find_all('td', {'class': 'rstd'}))))
 
     return {
         "local": local,
@@ -104,9 +98,8 @@ def find_partidos(tabla_partidos):
     for tr in tr_partidos:
         try:
             partidos_jornada.append(get_partido(str(tr)))
-        except:
-            pass
-
+        except Exception as e:
+            print e
     return partidos_jornada
 
 
@@ -153,9 +146,7 @@ def get_partidos(contador):
         partidos_jornada = find_partidos(tabla_partidos)
         for part in partidos_jornada:
             contador += 1
-            partidos[contador] = Partido(contador, Const.TEMPORADA_2018, 2, i,
-                                         part['local'], part['visitante'],
-                                         part['gLocal'], part['gVisitante'],
-                                         part['fecha'])
+            partidos[contador] = Partido(contador, Const.TEMPORADA_2018, 2, i, part['local'], part['visitante'],
+                                         part['gLocal'], part['gVisitante'], part['fecha'])
 
     return partidos

@@ -27,8 +27,7 @@ def replace_equipos(equipo):
     equipo = equipo.replace('Deportivo de La Coruña', 'Deportivo')
     equipo = equipo.replace('Barcelona Atletic', 'Barcelona B')
     # Elimino las tildes
-    equipo = unicodedata.normalize('NFKD', equipo.decode('utf-8')).encode(
-        'ASCII', 'ignore')
+    equipo = unicodedata.normalize('NFKD', equipo.decode('utf-8')).encode('ASCII', 'ignore')
 
     return equipo
 
@@ -56,10 +55,8 @@ def find_partidos(str_partidos, temporada, division):
         mat = re.sub(r'SP.*?="', '', mat).replace('";', '')
         sp = mat.split(' ')
         contador += 1
-        partidos[contador] = Partido(contador, temporada, division, jornada,
-                                     replace_equipos(equipos[sp[1]]),
-                                     replace_equipos(equipos[sp[2]]), sp[3],
-                                     sp[4], sp[0])
+        partidos[contador] = Partido(contador, temporada, division, jornada, replace_equipos(equipos[sp[1]]),
+                                     replace_equipos(equipos[sp[2]]), sp[3], sp[4], sp[0])
 
     return partidos
 
